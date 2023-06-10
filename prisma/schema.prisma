@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model games {
+  game_id    Int       @id @default(autoincrement())
+  title      String    @db.VarChar(255)
+  genre      String?   @db.VarChar(255)
+  platform   String?   @db.VarChar(255)
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  reviews    reviews[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model reviews {
+  review_id  Int       @id @default(autoincrement())
+  user_id    Int
+  game_id    Int
+  rating     Int?
+  comment    String?
+  created_at DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at DateTime? @default(now()) @db.Timestamptz(6)
+  games      games     @relation(fields: [game_id], references: [game_id], onDelete: NoAction, onUpdate: NoAction)
+  users      users     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  user_id       Int       @id @default(autoincrement())
+  username      String    @db.VarChar(255)
+  password      String    @db.VarChar(255)
+  email         String    @db.VarChar(255)
+  profile_photo String?   @db.VarChar(255)
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime? @default(now()) @db.Timestamptz(6)
+  reviews       reviews[]
+}
