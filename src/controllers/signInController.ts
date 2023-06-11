@@ -3,10 +3,6 @@ import signInService from '../services/signin-service/index.js';
 
 export async function signIn(req: Request, res: Response) {
     const { username, password } = req.body;
-    const { authorization } = req.headers;
-    if (!authorization) return res.status(401).send('Login não autorizado');
-    const parts = authorization.split(" ");
-    if (parts.length !== 2) return res.status(401).send('Login não autorizado');
 
     try {
         const result = await signInService.signIn({ username, password });

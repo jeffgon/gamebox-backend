@@ -22,7 +22,7 @@ async function signIn({username, password}) {
 
     if (!getUser) throw userNotFoundError();
 
-    return getUser;
+    return token;
 }
 
 const signInService = {

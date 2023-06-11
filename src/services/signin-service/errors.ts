@@ -17,13 +17,13 @@ export function invalidCredentials(): ApplicationError {
 export function userNotFoundError(): ApplicationError {
   return {
     name: 'userNotFoundError',
-    message: 'Usuário não encontrado'
+    message: 'Credenciais inválidas'
   }
 }
 
 export function notFoundError(): ApplicationError {
   return {
     name: 'notFoundError',
-    message: 'Usuário não encontrado',
+    message: 'Credenciais inválidas',
   }
 }
