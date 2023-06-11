@@ -14,7 +14,7 @@ export async function signIn(req: Request, res: Response) {
     } catch (error) {
         if (error.name === 'incompleteCredentialsError') return res.status(400).send(error.message);
         if (error.name === 'notFoundError') return res.status(404).send(error.message); 
-        if (error.name === 'invalidCredentials') return res.status(404).send(error.message);
+        if (error.name === 'invalidCredentials') return res.status(401).send(error.message);
         if (error.name === 'userNotFoundError') return res.status(404).send(error.message);
     }
 }

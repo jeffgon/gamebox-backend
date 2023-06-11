@@ -27,3 +27,17 @@ export function usernameAlreadyRegistered(): ApplicationError {
       message: 'Username já registrado',
     };
 }
+
+export function badRequestError(): ApplicationError {
+  return {
+      name: 'badRequestError',
+      message: 'Algo deu errado na requisição do servidor',
+    };
+}
+
+export function passwordLengthError(): ApplicationError {
+  return {
+      name: 'passwordLengthError',
+      message: 'A senha deve ter no mínimo 8 caracteres',
+    };
+}

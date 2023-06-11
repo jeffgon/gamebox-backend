@@ -1,13 +1,15 @@
 import { prisma } from '../config/database.js';
 
 async function signUp({email, username, password, confirmPassword}) {
-    return await prisma.users.create({
+    const result = await prisma.users.create({
         data: {
             username,
             password,
             email,
         },
     }); 
+
+    return result !== null;
 }
 
 async function verifyEmail({email}) {
