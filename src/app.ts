@@ -4,6 +4,7 @@ import cors from 'cors';
 import signUpRoute from './routes/signUpRoute.js';
 import { connectDb, disconnectDb } from './config/database.js';
 import signInRoute from './routes/signInRoute.js';
+import addRouter from './routes/addRoute.js';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app
   .use('/health', (_req, res) => res.send('Hi!'))
   .use('/', signInRoute)
   .use('/signup', signUpRoute)
+  .use('/add', addRouter)
   
 
 export function init() {

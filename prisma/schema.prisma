@@ -8,12 +8,13 @@ datasource db {
 }
 
 model games {
-  game_id    Int       @id @default(autoincrement())
-  title      String    @db.VarChar(255)
-  genre      String?   @db.VarChar(255)
-  platform   String?   @db.VarChar(255)
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  reviews    reviews[]
+  game_id     Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  genre       String?   @db.VarChar(255)
+  platform    String?   @db.VarChar(255)
+  cover_photo String?
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  reviews     reviews[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -34,7 +35,7 @@ model users {
   username      String    @db.VarChar(255)
   password      String    @db.VarChar(255)
   email         String    @db.VarChar(255)
-  profile_photo String?   @db.VarChar(255)
+  profile_photo String?   @default("https://www.promoview.com.br/uploads/images/unnamed%2819%29.png") @db.VarChar(255)
   created_at    DateTime? @default(now()) @db.Timestamptz(6)
   updated_at    DateTime? @default(now()) @db.Timestamptz(6)
   reviews       reviews[]

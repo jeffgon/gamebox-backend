@@ -4,6 +4,7 @@ CREATE TABLE "games" (
     "title" VARCHAR(255) NOT NULL,
     "genre" VARCHAR(255),
     "platform" VARCHAR(255),
+    "cover_photo" TEXT,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "games_pkey" PRIMARY KEY ("game_id")
@@ -28,7 +29,7 @@ CREATE TABLE "users" (
     "username" VARCHAR(255) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "email" VARCHAR(255) NOT NULL,
-    "profile_photo" VARCHAR(255),
+    "profile_photo" VARCHAR(255) DEFAULT 'https://www.promoview.com.br/uploads/images/unnamed%2819%29.png',
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
 

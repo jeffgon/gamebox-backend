@@ -20,7 +20,7 @@ export async function signUp(req: Request, res: Response) {
                 password, 
                 confirmPassword,
             })
-        return res.status(200).send(result);
+        return res.status(201).send(result);
     } catch (error) {
         if (error.name === 'incompleteCredentialsError') return res.status(400).send(error.message)
         if (error.name === 'differentPasswords') return res.status(400).send(error.message);
