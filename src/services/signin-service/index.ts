@@ -12,9 +12,9 @@ async function signIn({username, password}) {
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) throw invalidCredentials();
   
-    const token = jwt.sign({ id: user.user_id }, process.env.SECRET, { expiresIn: 86400 });
+    const token = jwt.sign({ id: user.user_id }, process.env.SECRET_JWT);
 
-    const decoded = verify(token, process.env.SECRET) as JwtPayload;
+    const decoded = verify(token, process.env.SECRET_JWT) as JwtPayload;
 
     const userId = decoded.id;
 

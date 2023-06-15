@@ -6,6 +6,7 @@ CREATE TABLE "games" (
     "platform" VARCHAR(255),
     "cover_photo" TEXT,
     "created_at" TIMESTAMPTZ(6) DEFAULT CURRENT_TIMESTAMP,
+    "user_id" INTEGER,
 
     CONSTRAINT "games_pkey" PRIMARY KEY ("game_id")
 );
@@ -35,6 +36,9 @@ CREATE TABLE "users" (
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("user_id")
 );
+
+-- AddForeignKey
+ALTER TABLE "games" ADD CONSTRAINT "games_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("user_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_game_id_fkey" FOREIGN KEY ("game_id") REFERENCES "games"("game_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
