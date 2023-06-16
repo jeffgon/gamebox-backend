@@ -7,20 +7,17 @@ interface GameInput {
   platform?: string;
   cover_photo?: string;
   user_id?: number;
+  review?: number;
 }
 
 async function addGame(game: GameInput) {
-  const result = await prisma.games.create({
-    data: {
-      title: game.title,
-      genre: game.genre,
-      platform: game.platform,
-      cover_photo: game.cover_photo,
-      user_id: game.user_id,
-    }
-  })
+  const { review, ...gameData } = game; 
 
-  return result !== null
+  const result = await prisma.games.create({
+    data: gameData, 
+  });
+
+  return result !== null;
 }
   
 

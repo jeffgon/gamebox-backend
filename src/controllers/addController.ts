@@ -6,12 +6,12 @@ import signInRepository from '../repositories/signInRepository.js';
 import { userNotFoundError } from '../services/signin-service/errors.js';
 
 export async function addGame(req: Request, res: Response) {
-    const { title, genre, platform, cover_photo } = req.body;
+    const { title, genre, platform, cover_photo, review } = req.body;
     const token = req.headers.authorization?.replace("Bearer ", "");
 
     if (!token) return res.status(401).send('Seu token não foi fornecido.');
 
-    const { error } = gameSchema.validate({ title, genre, platform, cover_photo }, { abortEarly: false });
+    const { error } = gameSchema.validate({ title, genre, platform, cover_photo, review }, { abortEarly: false });
     if (error){
         const errorMessages = error.details.map(err => err.message);
         return res.status(422).send(errorMessages);
@@ -24,7 +24,7 @@ export async function addGame(req: Request, res: Response) {
     const getUser = await signInRepository.getUserById(userId);
     if (!getUser) throw userNotFoundError();
 
-    const result = await addGameService.addGame({ title, genre, platform, cover_photo, user_id: userId });
+    const result = await addGameService.addGame({ title, genre, platform, cover_photo, user_id: userId, review });
 
     return res.send(result);
     } catch (error) {
