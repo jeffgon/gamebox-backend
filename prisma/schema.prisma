@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model games {
   game_id     Int       @id @default(autoincrement())
   title       String?   @db.VarChar(255)
@@ -17,6 +16,7 @@ model games {
   created_at  DateTime? @default(now()) @db.Timestamptz(6)
   user_id     Int?
   review      Int?
+  comment     String?   @db.VarChar
   users       users?    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
 }
 

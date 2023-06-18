@@ -6,12 +6,12 @@ import signInRepository from '../repositories/signInRepository.js';
 import { userNotFoundError } from '../services/signin-service/errors.js';
 
 export async function addGame(req: Request, res: Response) {
-    const { title, genre, platform, cover_photo, review } = req.body;
+    const { title, genre, platform, cover_photo, review, comment } = req.body;
     const token = req.headers.authorization?.replace("Bearer ", "");
 
     if (!token) return res.status(401).send('Seu token não foi fornecido.');
 
-    const { error } = gameSchema.validate({ title, genre, platform, cover_photo, review }, { abortEarly: false });
+    const { error } = gameSchema.validate({ title, genre, platform, cover_photo, review, comment }, { abortEarly: false });
     if (error){
         const errorMessages = error.details.map(err => err.message);
         return res.status(422).send(errorMessages);
@@ -24,13 +24,29 @@ export async function addGame(req: Request, res: Response) {
     const getUser = await signInRepository.getUserById(userId);
     if (!getUser) throw userNotFoundError();
 
-    const result = await addGameService.addGame({ title, genre, platform, cover_photo, user_id: userId, review });
+    const result = await addGameService.addGame(
+        { 
+            title, 
+            genre, 
+            platform, 
+            cover_photo, 
+            user_id: userId, 
+            review,
+            comment
+        });
 
     return res.send(result);
     } catch (error) {
-        if (error.name === 'JsonWebTokenError') return res.status(401).send('Token inválido.');
-        if (error.name === 'userNotFoundError') return res.status(404).send(error.message);
-        if (error.name === 'incompleteCredentialsError') return res.status(400).send(error.message);
-        if (error.name === 'badRequestError') return res.status(400).send(error.message);
+        if (error.name === 'JsonWebTokenError') {
+            return res.status(401).send('Token inválido.');
+          } else if (error.name === 'userNotFoundError') {
+                return res.status(404).send(error.message);
+          } else if (error.name === 'incompleteCredentialsError') {
+                return res.status(400).send(error.message);
+          } else if (error.name === 'badRequestError') {
+                return res.status(400).send(error.message);
+          } else {
+                return res.status(500).send(error.message);
+          }
     }
 }

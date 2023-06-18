@@ -22,13 +22,21 @@ export async function signUp(req: Request, res: Response) {
             })
         return res.status(201).send(result);
     } catch (error) {
-        if (error.name === 'incompleteCredentialsError') return res.status(400).send(error.message)
-        if (error.name === 'differentPasswords') return res.status(400).send(error.message);
-        if (error.name === 'emailAlreadyRegistered') return res.status(409).send(error.message);
-        if (error.name === 'usernameAlreadyRegistered') return res.status(409).send(error.message);
-        if (error.name === 'badRequestError') return res.status(400).send(error.message);
-        if (error.name === 'passwordLengthError') return res.status(400).send(error.message);
-        
+        if (error.name === 'incompleteCredentialsError') {
+            return res.status(400).send('Token inválido.');
+          } else if (error.name === 'differentPasswords') {
+                return res.status(404).send(error.message);
+          } else if (error.name === 'emailAlreadyRegistered') {
+                return res.status(401).send(error.message);
+          } else if (error.name === 'usernameAlreadyRegistered') {
+                return res.status(404).send(error.message);
+          } else if (error.name === 'badRequestError') {
+                return res.status(400).send(error.message);
+          } else if (error.name === 'passwordLengthError') {
+                return res.status(400).send(error.message);
+          } else {
+                return res.status(500).send(error.message);
+          }
     }
 };
 
