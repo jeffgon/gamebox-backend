@@ -12,7 +12,6 @@ interface GameInput {
   comment?: string | null;
 }
 
-
 async function addGame(game: GameInput) {
   const { title, genre, platform, cover_photo, user_id, review, comment } = game;
   const reviewValue = Number(review);
@@ -33,11 +32,27 @@ async function addGame(game: GameInput) {
   return result !== null;
 }
 
+async function getAllGames({ user }) {
+  const result = await prisma.games.findMany({
+      where: {
+          user_id: user,
+      },
+      select: {
+          title: true,
+          genre: true,
+          platform: true,
+          cover_photo: true,
+          review: true,
+          comment: true,
+      },
+  });
 
-
-
-const addRepository = {
-  addGame,
+  return result.length > 0 ? result : null;
 };
 
-export default addRepository;
+const gameRepository = {
+  addGame,
+  getAllGames
+};
+
+export default gameRepository;

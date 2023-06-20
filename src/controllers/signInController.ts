@@ -17,7 +17,7 @@ export async function signIn(req: Request, res: Response) {
           } else if (error.name === 'userNotFoundError') {
                 return res.status(404).send(error.message);
           } else {
-                return res.status(500).send(error.message);
+                  return res.status(500).send('Algo deu errado no servidor.');
           }
     }
 }

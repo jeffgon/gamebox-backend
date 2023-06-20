@@ -35,7 +35,7 @@ export async function signUp(req: Request, res: Response) {
           } else if (error.name === 'passwordLengthError') {
                 return res.status(400).send(error.message);
           } else {
-                return res.status(500).send(error.message);
+                return res.status(500).send('Algo deu errado no servidor.');
           }
     }
 };

@@ -1,10 +1,12 @@
-import addRepository from '../../repositories/addRepository.js';
+
+import gameRepository from '../../repositories/gameRepository.js';
 import { badRequestError, incompleteCredentialsError } from './errors.js';
+
 
 async function addGame({ title, genre, platform, cover_photo, user_id, review, comment }) {
     if (!title || !genre || !platform || !cover_photo || !review) throw incompleteCredentialsError();
 
-    const result = await addRepository.addGame({ title, genre, platform, cover_photo, user_id, review, comment })
+    const result = await gameRepository.addGame({ title, genre, platform, cover_photo, user_id, review, comment })
 
     if (result) {
         return 'Game registrado com sucesso!';
@@ -13,8 +15,15 @@ async function addGame({ title, genre, platform, cover_photo, user_id, review, c
     }
 }
 
-const addGameService = {
-    addGame,
+async function getAllGames({ user }) {
+    const result = await gameRepository.getAllGames({ user });
+
+    return result;
 }
 
-export default addGameService;
+const gameService = {
+    addGame,
+    getAllGames,
+}
+
+export default gameService;
