@@ -23,7 +23,7 @@ export async function signUp(req: Request, res: Response) {
         return res.status(201).send(result);
     } catch (error) {
         if (error.name === 'incompleteCredentialsError') {
-            return res.status(400).send('Token inválido.');
+            return res.status(400).send(error.message);
           } else if (error.name === 'differentPasswords') {
                 return res.status(404).send(error.message);
           } else if (error.name === 'emailAlreadyRegistered') {

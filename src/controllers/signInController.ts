@@ -9,7 +9,7 @@ export async function signIn(req: Request, res: Response) {
         return res.send(result)
     } catch (error) {
         if (error.name === 'incompleteCredentialsError') {
-            return res.status(400).send('Token inválido.');
+            return res.status(400).send(error.message);
           } else if (error.name === 'notFoundError') {
                 return res.status(404).send(error.message);
           } else if (error.name === 'invalidCredentials') {

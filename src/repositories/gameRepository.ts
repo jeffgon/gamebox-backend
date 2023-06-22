@@ -50,9 +50,23 @@ async function getAllGames({ user }) {
   return result.length > 0 ? result : null;
 };
 
+async function getGameById({ id }) {
+  const result = await prisma.games.findUnique({
+    where: {
+      game_id: Number(id),
+    },
+    include: {
+      users: true,
+    },
+  });
+
+  return result;
+}
+
 const gameRepository = {
   addGame,
-  getAllGames
+  getAllGames,
+  getGameById,
 };
 
 export default gameRepository;

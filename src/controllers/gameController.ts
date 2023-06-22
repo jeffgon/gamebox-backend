@@ -83,3 +83,34 @@ export async function getAllGames(req: Request, res: Response) {
         }
     }
 }
+
+export async function getGameById(req: Request, res: Response) {
+    const token = req.headers.authorization?.replace('Bearer ', '');
+    const { id } = req.params;
+  
+    if (!token) return res.status(401).send('Seu token não foi fornecido.');
+  
+    try {
+      const decodedToken = jwt.verify(token, process.env.SECRET_JWT) as JwtPayload;
+      const userId = decodedToken.id;
+  
+      const getUser = await signInRepository.getUserById(userId);
+      if (!getUser) throw userNotFoundError();
+  
+      const game = await gameService.getGameById({ id });
+  
+      if (!game) return res.status(404).send('Jogo não encontrado.');
+  
+      return res.send(game);
+    } catch (error) {
+      if (error.name === 'JsonWebTokenError') {
+        return res.status(401).send('Token inválido.');
+      } else if (error.name === 'userNotFoundError') {
+        return res.status(404).send(error.message);
+      } else if (error.name === 'badRequestError') {
+        return res.status(500).send(error.message);
+      } else {
+        return res.status(500).send('Algo deu errado no servidor.');
+      }
+    }
+}

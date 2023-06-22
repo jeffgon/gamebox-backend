@@ -1,4 +1,3 @@
-
 import gameRepository from '../../repositories/gameRepository.js';
 import { badRequestError, incompleteCredentialsError } from './errors.js';
 
@@ -21,9 +20,17 @@ async function getAllGames({ user }) {
     return result;
 }
 
+async function getGameById({ id }) {
+    const result = await gameRepository.getGameById({ id });
+  
+    return result;
+}
+  
+
 const gameService = {
     addGame,
     getAllGames,
+    getGameById,
 }
 
 export default gameService;
